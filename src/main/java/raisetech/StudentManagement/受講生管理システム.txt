@@ -1,0 +1,76 @@
+受講生管理システム
+
+  目的
+    講座を受講する人(受講生)の個人情報や何のコースを受けたかを管理する
+
+  要件
+    受講生の個人情報を管理できる
+      受講生情報を登録、更新、削除、検索ができる
+    受講生が何のコースを受けたか管理できる
+      受講生のコース情報を登録、更新、削除、検索ができる
+    受講生とコースの関係は1:*である
+
+    これらの情報を画面上で確認できる or 画面に連携するためのデータを返すことができる
+
+    受講生の情報は一括削除、一括更新できる
+
+  技術要件
+    Javaで開発をすること
+    SpringBootを使って開発をすること
+    MyBatisを使って開発をすること
+    Mysqlを仕様
+
+  機能
+    受講生情報(コースを含む)を管理する機能
+
+  仕様
+    受講生情報の定義
+      ID
+      名前(フルネーム)
+      フリガナ
+      ニックネーム
+      メアド
+      住んでる地域(市区町村)
+      年齢
+      性別(男性、女性、その他)
+
+      CREATE TABLE students(
+        id VARCHAR(36) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        kana_name VARCHAR(100) NOT NULL,
+        nickname VARCHAR(50),
+        email VARCHAR(255) NOT NULL UNIQUE,
+        address VARCHAR(100) NOT NULL,
+        age INT NOT NULL,
+        sex VARCHAR(10) NOT NULL
+        );
+
+
+    受講生コース情報の定義
+      ID
+      受講生情報のID
+      コース名
+      受講開始日
+      受講修了予定日
+
+    CREATE TABLE students_courses(
+      id VARCHAR(36) PRIMARY KEY,
+      student_id VARCHAR(36) NOT NULL,
+      course_name VARCHAR(30) NOT NULL,
+      course_start_date TIMESTAMP NOT NULL,
+      course_expected_end_date TIMESTAMP NOT NULL
+      );
+
+    DB設計
+      テーブル構成
+        受講生情報
+        受講生コース
+
+        受講生と受講生コースは関連あり。1:nの関係
+
+受講生テーブル:students
+受講生コーステーブル:students_courses
+
+INSERT INTO students_courses(id,student_id,course_name,course_start_at,course_expected_end_at)
+VALUES
+('3260','1792','デザインコース','2026-01-11 21:35:03','2026-04-11 23:59:59');
